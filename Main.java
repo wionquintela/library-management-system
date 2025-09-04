@@ -89,6 +89,6 @@ public class Main {
             System.out.println("Sorry no book matched or its not yet returned.");
         }
 
-
+        userInput.close();
     }
 }
