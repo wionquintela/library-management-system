@@ -4,14 +4,16 @@ class Book {
     String isbn;
     String orderCode;
     String title;
+    String date_borrowed;
     boolean isReturned;
 
     //template para mag add ng mga books
-    Book(String isbn, String orderCode, String title, boolean isReturned) {
+    Book(String isbn, String orderCode, String title, boolean isReturned, String date) {
         this.isbn = isbn;
         this.orderCode = orderCode;
         this.title = title;
         this.isReturned = isReturned;
+        this.date_borrowed = date;
     }
 
 }
@@ -25,16 +27,11 @@ public class Main {
 
         //hardcoded na library data
         Book[] books = {
-                new Book("9780451524935", "ORD001", "1984", false),
-                new Book("9780061122415", "ORD002", "The Alchemist", false),
-                new Book("9780547928227", "ORD003", "The Hobbit", true),
-                new Book("9780451526342", "ORD004", "Animal Farm", true),
-                // new Book("9780439023528", "ORD005", "The Hunger Games", false),
-                new Book("9780061120084", "ORD006", "To Kill a Mockingbird", true),
-                // new Book("9780316769488", "ORD007", "The Catcher in the Rye", false),
-                // new Book("9780743273565", "ORD008", "The Great Gatsby", true),
-                // new Book("9780140268867", "ORD009", "The Odyssey", true),
-                // new Book("9780140177398", "ORD010", "Of Mice and Men", false)
+                new Book("9780451524935", "ORD001", "1984", false, "September 2, 2026"),
+                new Book("9780061122415", "ORD002", "The Alchemist", false, "August 2, 2026"),
+                new Book("9780547928227", "ORD003", "The Hobbit", true, "May 1, 2026"),
+                new Book("9780451526342", "ORD004", "Animal Farm", true, "February 16, 2026"),
+                new Book("9780061120084", "ORD006", "To Kill a Mockingbird", true, "July 27, 2026"),
             };
 
         System.out.println("==========LIBRARY MANAGEMENT SYSTEM==========");
@@ -48,6 +45,7 @@ public class Main {
             System.out.println("Book title: " + b.title);
             System.out.println("ISBN: " + b.isbn);
             System.out.println("Order code: " + b.orderCode);
+            System.out.println("Borrow date: " + b.date_borrowed);
             System.out.println("Status: " + ((b.isReturned == false) ? "Not returned" : "Returned") );
             System.out.println();
         }
@@ -87,9 +85,21 @@ public class Main {
         //kung may laman na yung matchedBook variable magrarun
         if(matchedBook != null) {
             System.out.println("\n==========Found Book==========\n\nFound Book: " + matchedBook.title + "\nISBN: " + matchedBook.isbn + "\nReturned: " + matchedBook.isReturned);
-            
+        } else {
+            System.out.println("Sorry no book matched or its not yet returned.");
+            String[] a = {""};
+            main(a);
+        }
+
+
+
+        // ask user if they want to add a rating/review
+        System.out.print("Do you want to give the book a rating and review? \n(Y|y or N|n)");
+        String give_review = userInput.nextLine();
+
+        if (give_review.equals("Y") || give_review.equals("y")) {
             int rating = 6;
-            //dapat ay 1-5 lang
+
             do {
                 System.out.print("Rate the book (1/5): ");
                 rating = userInput.nextInt();
@@ -99,13 +109,10 @@ public class Main {
             System.out.print("Write your review: ");
             String review = userInput.nextLine();
 
-            //end ng ui
             System.out.println("\nYour review has been submitted!\n\n==========Book Review Summary==========\n\nTitle: "+ matchedBook.title + "\nRatings: "+ rating + "/5\nReview: " + review + "\n\n=========================");
-
-        } else {
-            //walang nag match na book base sa userinput
-            System.out.println("Sorry no book matched or its not yet returned.");
         }
+
+        System.out.println("\nThank you for returning the book!");
 
         userInput.close();
     }
